@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">流云智炬科技 | 科技守护生态，智慧创造未来</title>
+    <meta name="description" data-i18n="pageDescription" content="流云智炬科技 - 专注于智慧环境监测、绿色能源、生态农业、碳中和管理的高科技企业">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        eco: {
+                            primary: '#059669',
+                            secondary: '#0EA5E9',
+                            accent: '#F97316',
+                            light: '#D1FAE5',
+                            bg: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                        heading: ['Poppins', 'Noto Sans SC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --eco-primary: #059669;
+            --eco-secondary: #0EA5E9;
+            --eco-accent: #F97316;
+            --eco-light: #D1FAE5;
+            --eco-bg: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background: var(--eco-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--eco-primary), var(--eco-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Eco Button */
+        .btn-eco {
+            background: linear-gradient(135deg, var(--eco-primary), #10B981);
+            color: white;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+        
+        .btn-eco:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--eco-primary);
+            color: var(--eco-primary);
+            background: transparent;
+            padding: 12px 30px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .btn-outline:hover {
+            background: var(--eco-primary);
+            color: white;
+        }
+        
+        /* Counter Animation */
+        .counter-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--eco-primary);
+        }
+        
+        /* Section Spacing */
+        section {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--eco-primary), var(--eco-secondary));
+            z-index: 9999;
+            width: 0%;
+        }
+        
+        /* Nav Blur */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(248, 250, 252, 0.9);
+        }
+        
+        /* Language Switcher */
+        .lang-switch {
+            display: inline-flex;
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 20px;
+            padding: 4px;
+            border: 1px solid rgba(5, 150, 105, 0.2);
+        }
+        
+        .lang-btn {
+            padding: 6px 16px;
+            border-radius: 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+        
+        .lang-btn.active {
+            background: var(--eco-primary);
+            color: white;
+        }
+        
+        /* News Card */
+        .news-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Eco Pattern Background */
+        .eco-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-blur fixed top-0 left-0 right-0 z-50 border-b border-gray-200" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="relative w-10 h-10">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[#059669] to-[#0EA5E9] flex items-center justify-center">
+                            <i data-lucide="leaf" class="w-6 h-6 text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-[#0F172A]">流云智炬</span>
+                        <span class="block text-xs text-[#64748B] tracking-wider">TECHNOLOGY</span>
+                    </div>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#technology" class="text-[#64748B] hover:text-[#059669] transition-colors font-medium" data-i18n="navTechnology">核心技术</a>
+                    <a href="#solutions" class="text-[#64748B] hover:text-[#059669] transition-colors font-medium" data-i18n="navSolutions">解决方案</a>
+                    <a href="#news" class="text-[#64748B] hover:text-[#059669] transition-colors font-medium" data-i18n="navNews">新闻动态</a>
+                    <a href="#cases" class="text-[#64748B] hover:text-[#059669] transition-colors font-medium" data-i18n="navCases">成功案例</a>
+                    <a href="#contact" class="text-[#64748B] hover:text-[#059669] transition-colors font-medium" data-i18n="navContact">联系我们</a>
+                </div>
+                
+                <!-- Language & CTA -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <div class="lang-switch">
+                        <button class="lang-btn active" onclick="switchLanguage('zh')" id="btnZh">中</button>
+                        <button class="lang-btn" onclick="switchLanguage('en')" id="btnEn">EN</button>
+                    </div>
+                    <a href="#contact" class="btn-eco text-sm" data-i18n="ctaButton">立即咨询</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-[#0F172A]" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 right-0 w-80 h-full bg-white z-50 p-6 shadow-2xl" id="mobileMenu">
+        <button class="absolute top-4 right-4 text-[#0F172A]" onclick="toggleMobileMenu()">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="mt-12 space-y-6">
+            <a href="#technology" class="block text-lg text-[#64748B] hover:text-[#059669] font-medium" onclick="toggleMobileMenu()" data-i18n="navTechnology">核心技术</a>
+            <a href="#solutions" class="block text-lg text-[#64748B] hover:text-[#059669] font-medium" onclick="toggleMobileMenu()" data-i18n="navSolutions">解决方案</a>
+            <a href="#news" class="block text-lg text-[#64748B] hover:text-[#059669] font-medium" onclick="toggleMobileMenu()" data-i18n="navNews">新闻动态</a>
+            <a href="#cases" class="block text-lg text-[#64748B] hover:text-[#059669] font-medium" onclick="toggleMobileMenu()" data-i18n="navCases">成功案例</a>
+            <a href="#contact" class="block text-lg text-[#64748B] hover:text-[#059669] font-medium" onclick="toggleMobileMenu()" data-i18n="navContact">联系我们</a>
+            <div class="pt-6 border-t border-gray-200">
+                <div class="lang-switch">
+                    <button class="lang-btn active" onclick="switchLanguage('zh')">中</button>
+                    <button class="lang-btn" onclick="switchLanguage('en')">EN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative pt-20 eco-pattern" id="home">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center relative z-10">
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-[#059669]/10 border border-[#059669]/20 mb-8">
+                <i data-lucide="award" class="w-4 h-4 text-[#059669]"></i>
+                <span class="text-sm text-[#059669] font-medium" data-i18n="heroBadge">生态科技领航者</span>
+            </div>
+            
+            <!-- Main Title -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-[#0F172A]">
+                <span data-i18n="heroTitle">流云智炬科技</span>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-2xl md:text-3xl font-medium mb-4 gradient-text" data-i18n="heroSlogan">
+                科技守护生态，智慧创造未来
+            </p>
+            
+            <!-- Description -->
+            <p class="text-[#64748B] text-lg max-w-2xl mx-auto mb-12 leading-relaxed" data-i18n="heroDescription">
+                专注于智慧环境监测、绿色能源、生态农业、碳中和管理的高科技企业，
+                为全球可持续发展提供创新解决方案
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#solutions" class="btn-eco w-full sm:w-auto">
+                    <span data-i18n="heroCta1">探索解决方案</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+                <a href="#contact" class="btn-outline w-full sm:w-auto" data-i18n="heroCta2">联系我们</a>
+            </div>
+            
+            <!-- Stats Preview -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="counter-value" data-target="500">0</div>
+                    <div class="text-[#64748B] text-sm mt-2" data-i18n="stat1">万吨碳减排</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="counter-value" data-target="1000">0</div>
+                    <div class="text-[#64748B] text-sm mt-2" data-i18n="stat2">平方公里监测</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="counter-value" data-target="200">0</div>
+                    <div class="text-[#64748B] text-sm mt-2" data-i18n="stat3">家企业客户</div>
+                </div>
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="counter-value" data-target="50">0</div>
+                    <div class="text-[#64748B] text-sm mt-2" data-i18n="stat4">项技术专利</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="py-24 bg-white" id="technology">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-2 rounded-full bg-[#059669]/10 border border-[#059669]/20 mb-4">
+                    <span class="text-[#059669] text-sm font-medium tracking-wider" data-i18n="techBadge">CORE TECHNOLOGY</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#0F172A]" data-i18n="techTitle">核心技术</h2>
+                <p class="text-[#64748B] text-lg max-w-2xl mx-auto" data-i18n="techSubtitle">
+                    四大生态科技领域，构建绿色发展新生态
+                </p>
+            </div>
+            
+            <!-- Technology Cards -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-8 group hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#059669]/20 to-[#10B981]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="scan-line" class="w-7 h-7 text-[#059669]"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3 text-[#0F172A] group-hover:text-[#059669] transition-colors" data-i18n="techCard1Title">智慧环境监测</h3>
+                            <p class="text-[#64748B] leading-relaxed mb-4" data-i18n="techCard1Desc">
+                                运用物联网、AI和大数据技术，实现空气、水质、土壤等环境要素的实时监测与智能分析，为生态保护提供科学决策依据
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="techCard1Tag1">空气质量监测</span>
+                                <span class="px-3 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="techCard1Tag2">水质分析</span>
+                                <span class="px-3 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="techCard1Tag3">土壤检测</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-8 group hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0EA5E9]/20 to-[#38BDF8]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="sun" class="w-7 h-7 text-[#0EA5E9]"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3 text-[#0F172A] group-hover:text-[#059669] transition-colors" data-i18n="techCard2Title">绿色能源方案</h3>
+                            <p class="text-[#64748B] leading-relaxed mb-4" data-i18n="techCard2Desc">
+                                提供太阳能、风能、储能等清洁能源系统集成方案，助力企业实现能源结构转型，降低碳排放，提升能源使用效率
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-[#0EA5E9]/10 text-[#0EA5E9] text-xs font-medium" data-i18n="techCard2Tag1">太阳能系统</span>
+                                <span class="px-3 py-1 rounded-full bg-[#0EA5E9]/10 text-[#0EA5E9] text-xs font-medium" data-i18n="techCard2Tag2">风能利用</span>
+                                <span class="px-3 py-1 rounded-full bg-[#0EA5E9]/10 text-[#0EA5E9] text-xs font-medium" data-i18n="techCard2Tag3">储能技术</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-8 group hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#059669]/20 to-[#0EA5E9]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="sprout" class="w-7 h-7 text-[#059669]"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3 text-[#0F172A] group-hover:text-[#059669] transition-colors" data-i18n="techCard3Title">生态农业科技</h3>
+                            <p class="text-[#64748B] leading-relaxed mb-4" data-i18n="techCard3Desc">
+                                通过精准农业、智慧温室、水肥一体化等技术，提高农业生产效率，减少资源消耗，实现农业可持续发展
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="techCard3Tag1">精准农业</span>
+                                <span class="px-3 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="techCard3Tag2">智慧温室</span>
+                                <span class="px-3 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="techCard3Tag3">南繁种业</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="glass-card rounded-2xl p-8 group hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#F97316]/20 to-[#FB923C]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="pie-chart" class="w-7 h-7 text-[#F97316]"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold mb-3 text-[#0F172A] group-hover:text-[#059669] transition-colors" data-i18n="techCard4Title">碳中和管理平台</h3>
+                            <p class="text-[#64748B] leading-relaxed mb-4" data-i18n="techCard4Desc">
+                                提供碳足迹核算、碳资产管理、碳交易等一体化解决方案，帮助企业实现碳中和目标，参与碳市场交易
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 rounded-full bg-[#F97316]/10 text-[#F97316] text-xs font-medium" data-i18n="techCard4Tag1">碳足迹追踪</span>
+                                <span class="px-3 py-1 rounded-full bg-[#F97316]/10 text-[#F97316] text-xs font-medium" data-i18n="techCard4Tag2">碳资产管理</span>
+                                <span class="px-3 py-1 rounded-full bg-[#F97316]/10 text-[#F97316] text-xs font-medium" data-i18n="techCard4Tag3">碳交易</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="py-24 bg-[#D1FAE5]" id="solutions">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-2 rounded-full bg-[#059669]/10 border border-[#059669]/20 mb-4">
+                    <span class="text-[#059669] text-sm font-medium tracking-wider" data-i18n="solutionBadge">SOLUTIONS</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#0F172A]" data-i18n="solutionTitle">解决方案</h2>
+                <p class="text-[#64748B] text-lg max-w-2xl mx-auto" data-i18n="solutionSubtitle">
+                    为不同行业提供定制化生态科技解决方案
+                </p>
+            </div>
+            
+            <!-- Solutions Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Solution 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-[#059669]/10 flex items-center justify-center mb-4 group-hover:bg-[#059669] transition-colors">
+                        <i data-lucide="building-2" class="w-6 h-6 text-[#059669] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="solution1Title">企业环保方案</h3>
+                    <p class="text-[#64748B] text-sm leading-relaxed" data-i18n="solution1Desc">
+                        为企业提供ESG咨询、环保合规、绿色供应链等一站式环保解决方案
+                    </p>
+                </div>
+                
+                <!-- Solution 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-[#0EA5E9]/10 flex items-center justify-center mb-4 group-hover:bg-[#0EA5E9] transition-colors">
+                        <i data-lucide="landmark" class="w-6 h-6 text-[#0EA5E9] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="solution2Title">政府生态监测</h3>
+                    <p class="text-[#64748B] text-sm leading-relaxed" data-i18n="solution2Desc">
+                        为政府部门提供区域环境监测、生态评估、环保大数据平台等服务
+                    </p>
+                </div>
+                
+                <!-- Solution 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-[#059669]/10 flex items-center justify-center mb-4 group-hover:bg-[#059669] transition-colors">
+                        <i data-lucide="wheat" class="w-6 h-6 text-[#059669] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="solution3Title">农业智慧升级</h3>
+                    <p class="text-[#64748B] text-sm leading-relaxed" data-i18n="solution3Desc">
+                        助力农业现代化转型，提供智慧农业系统集成、精准种植、溯源管理等方案
+                    </p>
+                </div>
+                
+                <!-- Solution 4 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-[#F97316]/10 flex items-center justify-center mb-4 group-hover:bg-[#F97316] transition-colors">
+                        <i data-lucide="city" class="w-6 h-6 text-[#F97316] group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="solution4Title">城市绿色规划</h3>
+                    <p class="text-[#64748B] text-sm leading-relaxed" data-i18n="solution4Desc">
+                        参与城市生态规划，提供绿色建筑、海绵城市、生态修复等规划设计服务
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="py-24 bg-white" id="news">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-2 rounded-full bg-[#059669]/10 border border-[#059669]/20 mb-4">
+                    <span class="text-[#059669] text-sm font-medium tracking-wider" data-i18n="newsBadge">NEWS & INSIGHTS</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#0F172A]" data-i18n="newsTitle">新闻动态</h2>
+                <p class="text-[#64748B] text-lg max-w-2xl mx-auto" data-i18n="newsSubtitle">
+                    最新资讯、政策解读、行业洞察
+                </p>
+            </div>
+            
+            <!-- News Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- News 1 -->
+                <div class="news-card">
+                    <div class="h-48 bg-gradient-to-br from-[#059669]/20 to-[#0EA5E9]/20 flex items-center justify-center">
+                        <i data-lucide="file-text" class="w-16 h-16 text-[#059669]"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="px-2 py-1 rounded bg-[#059669]/10 text-[#059669] text-xs font-medium" data-i18n="newsTagPolicy">政策解读</span>
+                            <span class="text-[#64748B] text-sm">2024-02-08</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-[#0F172A] line-clamp-2" data-i18n="news1Title">
+                            国家发布碳达峰碳中和最新政策，生态科技企业迎来新机遇
+                        </h3>
+                        <p class="text-[#64748B] text-sm line-clamp-2" data-i18n="news1Desc">
+                            国务院发布《关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见》，明确提出推动绿色低碳发展...
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- News 2 -->
+                <div class="news-card">
+                    <div class="h-48 bg-gradient-to-br from-[#0EA5E9]/20 to-[#38BDF8]/20 flex items-center justify-center">
+                        <i data-lucide="trophy" class="w-16 h-16 text-[#0EA5E9]"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="px-2 py-1 rounded bg-[#0EA5E9]/10 text-[#0EA5E9] text-xs font-medium" data-i18n="newsTagCompany">公司动态</span>
+                            <span class="text-[#64748B] text-sm">2024-02-05</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-[#0F172A] line-clamp-2" data-i18n="news2Title">
+                            流云智炬科技荣获"2023年度绿色发展创新企业"称号
+                        </h3>
+                        <p class="text-[#64748B] text-sm line-clamp-2" data-i18n="news2Desc">
+                            凭借在智慧环境监测和碳中和管理领域的创新成果，公司荣获行业权威奖项，技术实力获业界认可...
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- News 3 -->
+                <div class="news-card">
+                    <div class="h-48 bg-gradient-to-br from-[#F97316]/20 to-[#FB923C]/20 flex items-center justify-center">
+                        <i data-lucide="trending-up" class="w-16 h-16 text-[#F97316]"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="px-2 py-1 rounded bg-[#F97316]/10 text-[#F97316] text-xs font-medium" data-i18n="newsTagIndustry">行业洞察</span>
+                            <span class="text-[#64748B] text-sm">2024-02-01</span>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-[#0F172A] line-clamp-2" data-i18n="news3Title">
+                            2024年全球生态科技发展趋势：AI赋能环境监测成新热点
+                        </h3>
+                        <p class="text-[#64748B] text-sm line-clamp-2" data-i18n="news3Desc">
+                            人工智能技术在环境监测领域的应用日益广泛，从数据采集到分析预测，AI正在重塑生态科技行业...
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View All Button -->
+            <div class="text-center mt-12">
+                <button class="btn-outline" data-i18n="newsViewAll">
+                    查看全部新闻
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cases Section -->
+    <section class="py-24 bg-[#F8FAFC]" id="cases">
+        <div class="max-w-7xl mx-auto px-6">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <div class="inline-block px-4 py-2 rounded-full bg-[#059669]/10 border border-[#059669]/20 mb-4">
+                    <span class="text-[#059669] text-sm font-medium tracking-wider" data-i18n="casesBadge">SUCCESS CASES</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#0F172A]" data-i18n="casesTitle">成功案例</h2>
+                <p class="text-[#64748B] text-lg max-w-2xl mx-auto" data-i18n="casesSubtitle">
+                    携手合作伙伴，共创绿色未来
+                </p>
+            </div>
+            
+            <!-- Cases Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Case 1 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-[#059669]/10 flex items-center justify-center">
+                            <i data-lucide="factory" class="w-5 h-5 text-[#059669]"></i>
+                        </div>
+                        <span class="text-sm text-[#64748B] font-medium">2024</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="case1Title">某大型制造企业碳中和项目</h3>
+                    <p class="text-[#64748B] text-sm" data-i18n="case1Desc">
+                        帮助客户实现年减排10万吨二氧化碳，能源使用效率提升35%
+                    </p>
+                </div>
+                
+                <!-- Case 2 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-[#0EA5E9]/10 flex items-center justify-center">
+                            <i data-lucide="trees" class="w-5 h-5 text-[#0EA5E9]"></i>
+                        </div>
+                        <span class="text-sm text-[#64748B] font-medium">2023</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="case2Title">海南省生态监测网络建设</h3>
+                    <p class="text-[#64748B] text-sm" data-i18n="case2Desc">
+                        建设覆盖全省的环境监测网络，实现空气质量实时监测与预警
+                    </p>
+                </div>
+                
+                <!-- Case 3 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-[#F97316]/10 flex items-center justify-center">
+                            <i data-lucide="sunflower" class="w-5 h-5 text-[#F97316]"></i>
+                        </div>
+                        <span class="text-sm text-[#64748B] font-medium">2023</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-[#0F172A]" data-i18n="case3Title">南繁种业智慧农业项目</h3>
+                    <p class="text-[#64748B] text-sm" data-i18n="case3Desc">
+                        为种业基地提供智慧温室和水肥一体化系统，节水40%，增产25%
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Partners -->
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-8 text-[#0F172A]" data-i18n="partnersTitle">合作伙伴</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="glass-card rounded-xl p-6 flex items-center justify-center h-20">
+                        <span class="text-[#64748B] font-medium">海南省科技厅</span>
+                    </div>
+                    <div class="glass-card rounded-xl p-6 flex items-center justify-center h-20">
+                        <span class="text-[#64748B] font-medium">三亚市政府</span>
+                    </div>
+                    <div class="glass-card rounded-xl p-6 flex items-center justify-center h-20">
+                        <span class="text-[#64748B] font-medium">中国农业大学</span>
+                    </div>
+                    <div class="glass-card rounded-xl p-6 flex items-center justify-center h-20">
+                        <span class="text-[#64748B] font-medium">国家能源集团</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-24 bg-white" id="contact">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div>
+                    <div class="inline-block px-4 py-2 rounded-full bg-[#059669]/10 border border-[#059669]/20 mb-4">
+                        <span class="text-[#059669] text-sm font-medium tracking-wider" data-i18n="contactBadge">CONTACT US</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#0F172A]" data-i18n="contactTitle">联系我们</h2>
+                    <p class="text-[#64748B] text-lg mb-8" data-i18n="contactSubtitle">
+                        期待与您合作，共同构建绿色可持续的未来
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-[#059669]/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-[#059669]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1 text-[#0F172A]" data-i18n="addressLabel">公司地址</h4>
+                                <p class="text-[#64748B]" data-i18n="addressValue">海南省三亚市崖州湾科技城创新产业园A座</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-[#059669]/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-6 h-6 text-[#059669]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1 text-[#0F172A]" data-i18n="phoneLabel">联系电话</h4>
+                                <p class="text-[#64748B]">0898-8888-8888</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-[#059669]/10 flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="mail" class="w-6 h-6 text-[#059669]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1 text-[#0F172A]" data-i18n="emailLabel">电子邮箱</h4>
+                                <p class="text-[#64748B]">contact@liuyunzhiju.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="glass-card rounded-2xl p-8">
+                    <form class="space-y-6" onsubmit="handleSubmit(event)">
+                        <div>
+                            <label class="block text-sm text-[#64748B] mb-2" data-i18n="formName">您的姓名</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#059669] focus:outline-none transition-colors text-[#0F172A]" placeholder="请输入姓名">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#64748B] mb-2" data-i18n="formPhone">联系电话</label>
+                            <input type="tel" class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#059669] focus:outline-none transition-colors text-[#0F172A]" placeholder="请输入电话">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#64748B] mb-2" data-i18n="formEmail">电子邮箱</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#059669] focus:outline-none transition-colors text-[#0F172A]" placeholder="请输入邮箱">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#64748B] mb-2" data-i18n="formMessage">咨询内容</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#059669] focus:outline-none transition-colors text-[#0F172A] resize-none" placeholder="请描述您的需求"></textarea>
+                        </div>
+                        <button type="submit" class="btn-eco w-full">
+                            <span data-i18n="formSubmit">提交咨询</span>
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-[#0F172A] text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="relative w-8 h-8">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[#059669] to-[#0EA5E9] flex items-center justify-center">
+                            <i data-lucide="leaf" class="w-4 h-4 text-white"></i>
+                        </div>
+                    </div>
+                    <span class="font-bold">流云智炬科技</span>
+                </div>
+                <div class="text-gray-400 text-sm">
+                    © 2024 Liuyun Zhiju Technology. All rights reserved.
+                </div>
+                <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-[#059669] transition-colors">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-[#059669] transition-colors">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-[#059669] transition-colors">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

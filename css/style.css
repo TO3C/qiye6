@@ -1,0 +1,349 @@
+/* 流云智炬科技 qiye6 - 生态科技风格样式系统 */
+
+:root {
+    /* 生态科技配色 */
+    --eco-primary: #059669;
+    --eco-primary-light: #10B981;
+    --eco-secondary: #0EA5E9;
+    --eco-secondary-light: #38BDF8;
+    --eco-accent: #F97316;
+    --eco-accent-light: #FB923C;
+    --eco-light: #D1FAE5;
+    --eco-bg: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-muted: #94A3B8;
+    --border-light: rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* 基础重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--eco-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 选择器样式 */
+::selection {
+    background: var(--eco-primary);
+    color: white;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--eco-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--eco-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--eco-primary-light);
+}
+
+/* 字体系统 */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Glassmorphism 卡片 */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* 渐变文字 */
+.gradient-text {
+    background: linear-gradient(135deg, var(--eco-primary), var(--eco-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Eco 按钮 */
+.btn-eco {
+    background: linear-gradient(135deg, var(--eco-primary), var(--eco-primary-light));
+    color: white;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+    font-size: 1rem;
+}
+
+.btn-eco:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+}
+
+.btn-eco:active {
+    transform: translateY(0);
+}
+
+/* 描边按钮 */
+.btn-outline {
+    border: 2px solid var(--eco-primary);
+    color: var(--eco-primary);
+    background: transparent;
+    padding: 12px 30px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.btn-outline:hover {
+    background: var(--eco-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* 计数器样式 */
+.counter-value {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--eco-primary);
+    line-height: 1;
+}
+
+/* 导航栏模糊效果 */
+.nav-blur {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(248, 250, 252, 0.9);
+}
+
+/* 语言切换器 */
+.lang-switch {
+    display: inline-flex;
+    background: rgba(5, 150, 105, 0.1);
+    border-radius: 20px;
+    padding: 4px;
+    border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.lang-btn {
+    padding: 6px 16px;
+    border-radius: 16px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.lang-btn:hover {
+    color: var(--eco-primary);
+}
+
+.lang-btn.active {
+    background: var(--eco-primary);
+    color: white;
+}
+
+/* 新闻卡片 */
+.news-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* 移动端菜单 */
+.mobile-menu {
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+/* 滚动进度条 */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--eco-primary), var(--eco-secondary));
+    z-index: 9999;
+    width: 0%;
+}
+
+/* 生态背景图案 */
+.eco-pattern {
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+}
+
+/* 响应式断点 */
+@media (max-width: 768px) {
+    .counter-value {
+        font-size: 2rem;
+    }
+    
+    .btn-eco,
+    .btn-outline {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+}
+
+/* 动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.6s ease-out;
+}
+
+/* 焦点状态 */
+*:focus-visible {
+    outline: 2px solid var(--eco-primary);
+    outline-offset: 2px;
+}
+
+/* 链接样式 */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--eco-primary);
+}
+
+/* 表单元素 */
+input, textarea, select {
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* 图片 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 禁用文本选择（可选） */
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* 工具类 */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 打印样式 */
+@media print {
+    .nav-blur,
+    .mobile-menu,
+    .scroll-progress {
+        display: none;
+    }
+    
+    body {
+        background: white;
+    }
+}
